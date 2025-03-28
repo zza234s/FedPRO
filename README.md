@@ -12,15 +12,13 @@ All used datasets can be downloaded [here](https://drive.google.com/file/d/1mS2f
 Please unzip the dataset.rar file into the dataset folder.
 
 
-## The model weight of trained FL algorithms
-
-
 ## Quickly Start (baseline FL algorithms + our proposed FedPRO)
-The example case uses FedAvg as the baseline algorithm.
-You can modify the "-algo" parameter to specify the other FL approaches.
+
 ```
-cd system
- 
+# The example case uses FedAvg as the baseline algorithm.
+# You can modify the "-algo" parameter to specify the other FL approaches.
+
+cd system 
 # NSL-KDD (Personalized test)
 python main.py -data NSLKDD_0.1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.1
 python main.py -data NSLKDD_0.5 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.5
