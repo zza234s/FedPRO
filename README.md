@@ -14,35 +14,46 @@ All used datasets can be downloaded [here](https://drive.google.com/file/d/175g1
 Please unzip the RAR file into the "dataset" folder.
 
 
-## Quickly Start (baseline FL algorithms + our proposed FedPRO)
+## Quickly Start  (baseline FL algorithms + our proposed FedPRO)
 
 ```
-# The example case uses FedAvg as the baseline algorithm.
-# You can modify the "-algo" parameter to specify the other FL approaches.
+# You can modify the '-data' parameter to specify the dataset and β value, i.e., {dataset folder}_{β values}
 
 cd system 
-# NSL-KDD (Personalized test)
-python main.py -data NSLKDD_0.1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.1
-python main.py -data NSLKDD_0.5 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.5
-python main.py -data NSLKDD_1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=1
-python main.py -data NSLKDD_10 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=10
+# NSL-KDD (Personalized test, β=0.5)
+python main.py -data NSLKDD_0.5 -algo Local -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # Local
+python main.py -data NSLKDD_0.5 -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # FedAvg
+python main.py -data NSLKDD_0.5 -algo MOON -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # MOON
+python main.py -data NSLKDD_0.5 -algo FedProto -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # FedProto
+python main.py -data NSLKDD_0.5 -algo FedTGP -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # FedTGP
+python main.py -data NSLKDD_0.5 -algo GPFL -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # GPFL
+python main.py -data NSLKDD_0.5 -algo FedDBE -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # FedDBE
 
-# NSL-KDD  (Global test)
-python main.py -data NSLKDD_global_0.1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.1
-python main.py -data NSLKDD_global_0.5 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.5
-python main.py -data NSLKDD_global_1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=1
-python main.py -data NSLKDD_global_10 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=10
+# NSL-KDD  (Global test, β==0.5)
+python main.py -data NSLKDD_global_0.5 -algo Local -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # Local
+python main.py -data NSLKDD_global_0.5 -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # FedAvg
+python main.py -data NSLKDD_global_0.5 -algo MOON -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # MOON
+python main.py -data NSLKDD_global_0.5 -algo FedProto -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # FedProto
+python main.py -data NSLKDD_global_0.5 -algo FedTGP -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # FedTGP
+python main.py -data NSLKDD_global_0.5 -algo GPFL -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # GPFL
+python main.py -data NSLKDD_global_0.5 -algo FedDBE -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True # FedDBE
 
-# CICIDS-2018 (Personalized test)
-python main.py -data CICIDS_0.1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.1
-python main.py -data CICIDS_0.5 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.5
-python main.py -data CICIDS_1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=1
-python main.py -data CICIDS_10 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=10
+# CICIDS-2018 (Personalized test, β=0.5)
+python main.py -data CICIDS_0.5 -algo Local -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # Local
+python main.py -data CICIDS_0.5 -algo FedAvg -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # FedAvg
+python main.py -data CICIDS_0.5 -algo MOON -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # MOON
+python main.py -data CICIDS_0.5 -algo FedProto -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # FedProto
+python main.py -data CICIDS_0.5 -algo FedTGP -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # FedTGP
+python main.py -data CICIDS_0.5 -algo GPFL -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # GPFL
+python main.py -data CICIDS_0.5 -algo FedDBE -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # FedDBE
 
-# CICIDS-2018 (Global test)
-python main.py -data CICIDS_global_0.1 -m cicids -algo FedAvg -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True #  β=0.1
-python main.py -data CICIDS_global_0.5 -m cicids -algo FedAvg -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True #  β=0.5
-python main.py -data CICIDS_global_1 -m cicids -algo FedAvg -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True #  β=1
-python main.py -data CICIDS_global_10 -m cicids -algo FedAvg -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True #  β=10
 
+# CICIDS-2018 (Global test, β=0.5)
+python main.py -data CICIDS_global_0.5 -algo Local -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # Local
+python main.py -data CICIDS_global_0.5 -algo FedAvg -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # FedAvg
+python main.py -data CICIDS_global_0.5 -algo MOON -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # MOON
+python main.py -data CICIDS_global_0.5 -algo FedProto -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # FedProto
+python main.py -data CICIDS_global_0.5 -algo FedTGP -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # FedTGP
+python main.py -data CICIDS_global_0.55 -algo GPFL -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # GPFL
+python main.py -data CICIDS_global_0.5 -algo FedDBE -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True # FedDBE
 ```
