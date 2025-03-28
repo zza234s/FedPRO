@@ -9,21 +9,40 @@ We are very grateful for this outstanding library.
 
 All used datasets can be downloaded [here](https://drive.google.com/file/d/1mS2fbBCeXSvNeOlrvd0sOme2uUgTKqpJ/view?usp=sharing)
 
-Please unzip the dataset.rar file into the dataset folder
+Please unzip the dataset.rar file into the dataset folder.
 
 
-## Quickly Start (example)
+## The model weight of trained FL algorithms
+
+
+## Quickly Start (baseline FL algorithms + our proposed FedPRO)
+The example case uses FedAvg as the baseline algorithm.
+You can modify the "-algo" parameter to specify the other FL approaches.
 ```
-# NSLKDD (Personalized test)
-python main.py -data NSLKDD -m cicids -algo ours -gr 128 -lbs 1024 -nc 5 -nb 5
+cd system
+ 
+# NSL-KDD (Personalized test)
+python main.py -data NSLKDD_0.1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.1
+python main.py -data NSLKDD_0.5 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.5
+python main.py -data NSLKDD_1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=1
+python main.py -data NSLKDD_10 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=10
 
-# NSLKDD (Global test)
-python main.py -data NSLKDD_global -m cicids -algo ours -gr 50 -lbs 128 -nc 5  -nb 5
+# NSL-KDD  (Global test)
+python main.py -data NSLKDD_global_0.1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.1
+python main.py -data NSLKDD_global_0.5 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.5
+python main.py -data NSLKDD_global_1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=1
+python main.py -data NSLKDD_global_10 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=10
 
-# CICIDS2018 (Personalized test)
-python main.py -data mini_cicids_2018 -m cicids -algo ours -gr 100 -lbs 1024 -nc 5 -nb 7
+# CICIDS-2018 (Personalized test)
+python main.py -data CICIDS_0.1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.1
+python main.py -data CICIDS_0.5 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=0.5
+python main.py -data CICIDS_1 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=1
+python main.py -data CICIDS_10 -m cicids -algo FedAvg -nc 5 -ncl 5 -topk 1 -fd 80 --skip_FL True #  β=10
 
-# CICIDS2018 (Global test)
-python main.py -data mini_cicids_2018_global_test -m cicids -algo ours -gr 100 -lbs 1024 -nc 5 -nb 7
+# CICIDS-2018 (Global test)
+python main.py -data CICIDS_global_0.1 -m cicids -algo FedAvg -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True #  β=0.1
+python main.py -data CICIDS_global_0.5 -m cicids -algo FedAvg -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True #  β=0.5
+python main.py -data CICIDS_global_1 -m cicids -algo FedAvg -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True #  β=1
+python main.py -data CICIDS_global_10 -m cicids -algo FedAvg -nc 5 -ncl 7 -topk 1 -fd 80 --skip_FL True #  β=10
 
 ```
