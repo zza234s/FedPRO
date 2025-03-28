@@ -153,7 +153,7 @@ class FedGH(Server):
             self.opt_h.step()
 
     def load_best_pesonlized_model(self):
-        algo_path = os.path.join(self.args.best_model_dir, self.dataset, self.algorithm)  # TODO:删除time编号
+        algo_path = os.path.join(self.args.best_model_dir, self.dataset, self.algorithm)
         timestamp_folder_path  = get_timestamp_folder(algo_path)
         file_path = os.path.join(algo_path, timestamp_folder_path)
         assert os.path.exists(file_path), f"Model path {file_path} does not exist!"

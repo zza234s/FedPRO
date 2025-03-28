@@ -202,26 +202,8 @@ class Client(object):
                 train_num += y.shape[0]
                 losses += loss.item() * y.shape[0]
 
-        # self.model.cpu()
-        # self.save_model(self.model, 'model')
 
         return losses, train_num
-
-    # def get_next_train_batch(self):
-    #     try:
-    #         # Samples a new batch for persionalizing
-    #         (x, y) = next(self.iter_trainloader)
-    #     except StopIteration:
-    #         # restart the generator if the previous generator is exhausted.
-    #         self.iter_trainloader = iter(self.trainloader)
-    #         (x, y) = next(self.iter_trainloader)
-
-    #     if type(x) == type([]):
-    #         x = x[0]
-    #     x = x.to(self.device)
-    #     y = y.to(self.device)
-
-    #     return x, y
 
     def save_item(self, item, item_name, item_path=None):
         if item_path == None:
@@ -328,191 +310,9 @@ class Client(object):
 
             agg_local_protos[cls] = agg_selected_proto
 
-        # # 确保所有类别都存在默认值
-        # if agg_local_protos:
-        #     default_shape = next(iter(agg_local_protos.values()))[0].shape[0]
-        #     for label in range(self.num_classes):
-        #         if label not in agg_local_protos:
-        #             agg_local_protos[label] = [torch.zeros(default_shape, device=self.device)]
-
         # 确保字典按 key 排序
         agg_local_protos = dict(sorted(agg_local_protos.items()))
         self.protos = agg_local_protos
-
-    # @torch.no_grad()
-    # def local_cluster_for_proto_gen(self):
-    #     trainloader = self.load_train_data()
-    #     self.model.eval()
-    #
-    #     reps_dict = defaultdict(list)
-    #     agg_local_protos = defaultdict(list)
-    #     with torch.no_grad():
-    #         for i, (x, y) in enumerate(trainloader):
-    #             if type(x) == type([]):
-    #                 x[0] = x[0].to(self.device)
-    #             else:
-    #                 x = x.to(self.device)
-    #             y = y.to(self.device)
-    #
-    #             rep = self.model.base(x)
-    #
-    #             owned_classes = y.unique()
-    #             for cls in owned_classes:
-    #                 filted_reps = rep[y == cls].detach()
-    #                 reps_dict[cls.item()].append(filted_reps.detach().clone())
-    #
-    #     # 输出未见类信息
-    #     unseen_classes = set(range(self.num_classes)) - set(reps_dict.keys())
-    #     if unseen_classes != set():
-    #         print(f"class(es) {unseen_classes} not in the client{self.id}'s  local training dataset")
-    #
-    #     # 聚类生成原型
-    #     for cls, protos in reps_dict.items():
-    #         protos_np = torch.cat(protos).detach().cpu().numpy()
-    #         c, num_clust, req_c = FINCH(protos_np, initial_rank=None, req_clust=None, distance='cosine',
-    #                                     ensure_early_exit=False,
-    #                                     verbose=False)  # ['cityblock', 'cosine', 'euclidean', 'l1', 'l2', 'manhattan']
-    #         m, n = c.shape
-    #         class_cluster_list = []
-    #         for index in range(m):
-    #             class_cluster_list.append(c[index, -1])
-    #
-    #         class_cluster_array = np.array(class_cluster_list)
-    #         uniqure_cluster = np.unique(class_cluster_array).tolist()
-    #         agg_selected_proto = []
-    #
-    #         for _, cluster_index in enumerate(uniqure_cluster):
-    #             selected_array = np.where(class_cluster_array == cluster_index)
-    #             selected_proto_list = protos_np[selected_array]
-    #             proto = np.mean(selected_proto_list, axis=0, keepdims=True)
-    #
-    #             agg_selected_proto.append(torch.tensor(proto))
-    #         agg_local_protos[cls] = agg_selected_proto
-    #
-    #         # mean_proto = torch.cat(protos).mean(dim=0)
-    #         # agg_local_protos[cls] = mean_proto
-    #
-    #     # for label in range(self.num_classes):
-    #     #     if label not in agg_local_protos:
-    #     #         agg_local_protos[label] = torch.zeros(list(agg_local_protos.values())[0].shape[0],
-    #     #                                               device=self.device)
-    #
-    #     agg_local_protos = dict(sorted(agg_local_protos.items()))  # 确保上传的dict按key升序排序
-    #     self.protos = agg_local_protos
-
-    # def refine_proto_db(self, epochs=50):
-    #     local_proto_ids = [(idx, meta['class']) for idx, meta in self.proto_meta.items()
-    #                        if meta['CLIENT_ID'] == self.id]
-    #     local_proto_ids = torch.tensor(local_proto_ids)
-    #
-    #     self.protoConLoss = ProtoConloss(temperature=self.proto_tempure)
-    #
-    #     self.margin = 0.1
-    #
-    #     # 创建可优化的原型参数
-    #     P = torch.nn.Parameter(
-    #         torch.tensor(
-    #             copy.deepcopy(self.proto_db[local_proto_ids[:, 0]]),
-    #             device=self.device,
-    #             dtype=torch.float32
-    #         )
-    #     )
-    #     proto_label = torch.tensor(local_proto_ids[:, 1], device=self.device)
-    #     unique_classes = torch.unique(proto_label)
-    #     class_to_index = {cls.item(): idx for idx, cls in enumerate(unique_classes)}
-    #
-    #     if len(unique_classes) == 1:
-    #         print(f"client#{self.id} 只有{len(unique_classes)}个类，暂不支持更新prototype")
-    #         agg_local_protos = defaultdict(list)
-    #         for cls, protos in zip(proto_label, P.clone().detach()):
-    #             agg_local_protos[cls.item()].append(protos)
-    #
-    #         self.protos = agg_local_protos
-    #         return
-    #
-    #     optimizer = Adam([P], lr=0.01)
-    #     self.model.eval()
-    #     loader = self.load_train_data()
-    #
-    #     # 预计算所有训练样本的特征表示
-    #     all_features, all_labels = [], []
-    #     with torch.no_grad():
-    #         for x, y in loader:
-    #             x = x.to(self.device)
-    #             rep = self.model.base(x)
-    #             all_features.append(rep)
-    #             all_labels.append(y)
-    #
-    #     all_features = torch.cat(all_features, dim=0)
-    #     all_labels = torch.cat(all_labels, dim=0)
-    #     feature_loader = DataLoader(TensorDataset(all_features, all_labels), batch_size=1024, shuffle=True)
-    #
-    #     best_accuracy, no_improve_count = 0, 0
-    #     best_prototypes = P.clone().detach()
-    #     patience = 5
-    #
-    #     for epoch in range(epochs):
-    #         total_loss, correct, total = 0, 0, 0
-    #
-    #         for features, labels in feature_loader:
-    #             features, labels = features.to(self.device), labels.to(self.device)
-    #
-    #             # 计算样本表征与原型之间的余弦相似度
-    #             sim_matrix = F.normalize(features, p=2, dim=1) @ F.normalize(P, p=2, dim=1).T
-    #             pos_indices = torch.tensor([class_to_index[l.item()] for l in labels], device=self.device)
-    #
-    #
-    #             if self.proto_op_mode == "infonce":
-    #                 losses =self.protoConLoss(features, labels,  P, proto_label, len(unique_classes))
-    #             else:
-    #
-    #                 # 计算类别的最大相似度
-    #                 class_max_sims = torch.full((features.size(0), len(unique_classes)), -float('inf'),
-    #                                             device=self.device)
-    #                 for idx, cls in enumerate(unique_classes):
-    #                     cls_mask = (proto_label == cls)
-    #                     if cls_mask.any():
-    #                         class_max_sims[:, idx] = sim_matrix[:, cls_mask].max(dim=1).values
-    #
-    #                 pos_sims = class_max_sims[torch.arange(features.size(0)), pos_indices]
-    #                 neg_sims = class_max_sims.clone()
-    #                 neg_sims.masked_fill_(
-    #                     torch.arange(features.size(0), device=self.device).unsqueeze(1) == pos_indices.unsqueeze(0),
-    #                     -float('inf'))
-    #                 # 计算最大负类相似度
-    #                 neg_max = neg_sims.max(dim=1).values
-    #
-    #                 # 计算 Hinge Loss 变体
-    #                 losses = F.relu(self.margin - (pos_sims - neg_max))
-    #
-    #             batch_loss = losses.mean()
-    #             total_loss += batch_loss.item()
-    #
-    #             optimizer.zero_grad()
-    #             batch_loss.backward()
-    #             optimizer.step()
-    #
-    #             pred_label = proto_label[sim_matrix.argmax(dim=1)]
-    #             correct += (pred_label == labels).sum().item()
-    #             total += labels.size(0)
-    #
-    #         epoch_accuracy = correct / total
-    #         print(f"client#{self.id}, Epoch {epoch + 1}/{epochs}, Loss: {total_loss:.4f}, Acc: {epoch_accuracy:.4f}")
-    #
-    #         if epoch_accuracy > best_accuracy:
-    #             best_accuracy, best_prototypes, no_improve_count = epoch_accuracy, P.clone().detach(), 0
-    #         else:
-    #             no_improve_count += 1
-    #
-    #         if no_improve_count >= patience:
-    #             print(f"连续{patience}轮无改善，提前停止")
-    #             break
-    #
-    #     print(f"优化完成，最佳准确率: {best_accuracy:.4f}")
-    #     agg_local_protos = defaultdict(list)
-    #     for cls, protos in zip(proto_label, best_prototypes):
-    #         agg_local_protos[cls.item()].append(protos)
-    #     self.protos = agg_local_protos
 
     def refine_proto_db(self, epochs=50):
         local_proto_ids = [(idx, meta['class']) for idx, meta in self.proto_meta.items()
@@ -540,8 +340,7 @@ class Client(object):
 
             self.protos = agg_local_protos
             return
-        # 设置优化器
-        optimizer = Adam([P], lr=0.01)  # TODO: 优化器参数待调整
+        optimizer = Adam([P], lr=0.01)
         self.model.eval()
 
         loader = self.load_train_data()

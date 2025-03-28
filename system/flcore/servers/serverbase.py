@@ -496,51 +496,20 @@ class Server(object):
         self.selected_clients = self.select_clients()
 
         self.receive_cluster_protos()
-        # self.receive_local_protos()
+
         self.build_prototype_db(use_cluster=use_cluster, use_global_protos=use_global_protos)
-        # self.save_item(self.proto_db, 'proto_db_before_optimization')
-        # self.save_item(self.proto_meta, 'proto_meta_before_optimization')
-
-
-        # self.build_prototype_db(use_cluster=self.args.use_cluster_proto, use_global_protos=self.args.use_global_proto)
         self.send_prototype_db()
-        # self.RAF_evaluate()
-        # self.receive_proto_feedback(mode='train', mask_other_client_proto=True,phase="before",visualize=True) #todo：保存每个client的embedding
 
         self.refine_then_upload_protos_for_clients(proto_epoch=self.args.proto_refine_epoch)
 
-        self.build_prototype_db(use_cluster=use_cluster, use_global_protos=use_global_protos,
-                                server_cluster=server_cluster)
+        self.build_prototype_db(use_cluster=use_cluster, use_global_protos=use_global_protos,server_cluster=server_cluster)
         self.send_prototype_db()
-        # self.save_item(self.proto_db, 'proto_db_after_optimization')
-        # self.save_item(self.proto_meta, 'proto_meta_after_optimization')
-
-
-        # self.receive_proto_feedback(mode='train', mask_other_client_proto=True,phase="after",visualize=True)
 
         self.RAF_evaluate()
-        # self.vis_prototye_effectiveness()
 
     def vis_prototye_effectiveness(self):
         for client in self.clients:
             client.vis_proto_effectiveness()
-
-
-
-        # self.receive_proto_feedback(mode='test')
-        # for i in range(self.adaptation_rounds):
-        #     print(f"\n-------------Plus Round number: {i}-------------")
-        #     self.RAF_evaluate()
-        #     self.receive_proto_feedback()
-        #     self.aggregate_feedback()
-        #     self.update_prototype_weights()
-        #     # self.update_proto_db()
-        #     self.send_prototype_db()
-        #
-        #     if self.auto_break and self.check_done(acc_lss=[self.rs_test_acc], top_cnt=self.top_cnt):
-        #         break
-        # self.save_plug_results()
-        # self.save_results()
 
     def receive_local_protos(self):
         self.global_protos = []
