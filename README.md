@@ -1,6 +1,6 @@
 # Prototype Retrieval-Augmented Test-Time Optimization  for Federated Intrusion Detection System
 
-## Acknowledge
+## Acknowledgement
 
 All baselines and our method are implemented on top of [PFLlib](https://www.pfllib.com/benchmark.html). 
 
