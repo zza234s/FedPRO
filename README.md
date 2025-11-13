@@ -1,12 +1,5 @@
 # Prototype Retrieval-Augmented Test-Time Optimization  for Federated Intrusion Detection System
 
-![The overview of the proposed FedPRO](./framework_1112_final_01.png)
-
-
-
-
-
-
 
 ## Acknowledgement
 
