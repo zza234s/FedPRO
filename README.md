@@ -11,7 +11,7 @@ We are very grateful for their outstanding library.
 
 All used datasets can be downloaded [here](https://drive.google.com/file/d/1eV5628osYru5ndeqoEPv9mGIKaI29BHG/view?usp=sharing)
 
-Please unzip the RAR file into the "dataset" folder.
+Please unzip the RAR file into the "system/dataset" folder.
 
 
 ## Quickly Start  (baseline FL algorithms + our proposed FedPRO)
