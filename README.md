@@ -72,7 +72,7 @@ python system/main.py -data CICIDS_global_0.5 -algo FedDBE  -ncl 7 -topk 1  --sk
 
 ```
 python main.py -data BODMAS_0.1 -m cicids -algo FedAvg -ncl 267 -skip_FL True -topk 1 # Personalized test
-python main.py -data BODMAS_global_0.1 -m cicids -algo FedAvg -ncl 267 -skip_FL -topk 1  True # Global test
+python main.py -data BODMAS_global_0.1 -m cicids -algo FedAvg -ncl 267 -skip_FL True -topk 1  True # Global test
 ```
 
 #### Omniglot example
