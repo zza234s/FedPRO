@@ -1,4 +1,5 @@
-# Prototype Retrieval-Augmented Test-Time Optimization  for Federated Intrusion Detection System
+# Prototype Retrieval-Augmented Federated Learning System for Robust Intrusion Detection
+
 
 
 ## Acknowledgement
