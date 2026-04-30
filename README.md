@@ -2,7 +2,6 @@
 
 This repository provides the official implementation and experimental resources for our paper, **“Prototype Retrieval-Augmented Federated Learning System for Robust Intrusion Detection.”** It includes the source code, experimental datasets/results, configuration files.
 
-The proposed **FedPRO** is a prototype retrieval-augmented federated learning system. It enables federated clients to retrieve and leverage complementary prototype-level knowledge from other clients without sharing raw data, thereby improving detection performance and generalization under heterogeneous non-IID data distributions.
 
 ![Figure 1](./framework_final.png)
 
