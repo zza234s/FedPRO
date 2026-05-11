@@ -28,6 +28,21 @@ Please unzip the RAR file into the "system/dataset" folder.
 
 
 
+### (1) Generate model weights for FL baselines
+
+Run the command for each FL baseline **without** `--skip_FL True`. The generated model weights are saved under `temp/{dataset}/{algorithm}/{timestamp}/` by default.
+
+Example:
+```
+python system/main.py -data NSLKDD_0.5 -algo FedAvg -ncl 5 # FedAvg. Here, ncl denotes the number of classes.
+```
+
+### (2) Evaluate the proposed FedPRO
+
+After generating the model weights, run the following commands with `--skip_FL True`.
+
+The program loads model weights from `temp` by default and evaluates the effectiveness of the proposed FedPRO.
+
 #### NSL-KDD (Personalized test)
 ```
 python system/main.py -data NSLKDD_0.5 -algo Local -ncl 5 -topk 1 --skip_FL True # Local

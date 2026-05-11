@@ -318,7 +318,7 @@ if __name__ == "__main__":
     parser.add_argument('-vs', "--vocab_size", type=int, default=32000,
                         help="Set this for text tasks. 80 for Shakespeare. 32000 for AG_News and SogouNews.")
     parser.add_argument('-ml', "--max_len", type=int, default=200)
-    parser.add_argument('-sfn', "--save_folder_name", type=str, default='./20251110_test')
+    parser.add_argument('-sfn', "--save_folder_name", type=str, default='temp')
     # practical
     parser.add_argument('-cdr', "--client_drop_rate", type=float, default=0.0,
                         help="Rate for clients that train but drop out")
@@ -399,7 +399,7 @@ if __name__ == "__main__":
     parser.add_argument('-load_acc_str', "--load_acc_str", type=str, default="0.7477")
     parser.add_argument('-use_cluster_proto', "--use_cluster_proto", type=bool, default=True)
     parser.add_argument('-use_global_proto', "--use_global_proto", type=bool, default=False)
-    parser.add_argument('-best_model_dir', "--best_model_dir", type=str, default='./20251107_main_large')
+    parser.add_argument('-best_model_dir', "--best_model_dir", type=str, default='temp')
 
     parser.add_argument('-proto_refine_epoch', "--proto_refine_epoch", type=int, default=300)
     parser.add_argument('-exp_name', "--exp_name", type=str, default="./fedgh_0324")
